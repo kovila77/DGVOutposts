@@ -41,7 +41,7 @@ namespace DGVOutposts
         {
             // Use the short date format.
             this.Style.Format = "d";
-            this.Style.NullValue = "asrgasgserg";
+            this.Style.NullValue = null;
         }
 
         public override void InitializeEditingControl(int rowIndex, object
@@ -55,7 +55,12 @@ namespace DGVOutposts
             // Use the default row value when Value property is null.
             if (this.Value == null)
             {
-                ctl.Value = (DateTime)this.DefaultNewRowValue;
+                try
+                {
+                    ctl.Value = (DateTime)this.DefaultNewRowValue;
+                }
+                catch
+                { }
             }
             else
             {
@@ -87,7 +92,8 @@ namespace DGVOutposts
             get
             {
                 // Use the current date and time as the default value.
-                return DateTime.Now;
+                //return DateTime.Now;
+                return null;
             }
         }
     }

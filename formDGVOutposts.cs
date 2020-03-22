@@ -27,21 +27,14 @@ namespace DGVOutposts
         public formDGVOutposts()
         {
             InitializeComponent();
-            dgvMissions.AutoGenerateColumns = true;
         }
 
         private void InitializeDGVMissions()
         {
-            dtMissions = new DataTable();
-            dtMissions.Columns.Add("id", typeof(int));
-            dtMissions.Columns.Add("outpost_id", typeof(int));
-            dtMissions.Columns.Add("description", typeof(string));
-            dtMissions.Columns.Add("date_begin", typeof(DateTime));
-            dtMissions.Columns.Add("date_plan_end", typeof(DateTime));
-            dtMissions.Columns.Add("date_actual_end", typeof(DateTime));
-
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_begin", HeaderText = "Дата начала"});
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_plan_end", HeaderText = "Планируемое завершение"});
+            dgvMissions.Columns[dgvMissions.Columns.Add("id", "id")].Visible = false;
+            dgvMissions.Columns.Add("description", "Описание миссии");
+            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_begin", HeaderText = "Дата начала" });
+            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_plan_end", HeaderText = "Планируемое завершение" });
             dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_actual_end", HeaderText = "Реальное завершение" });
 
 
@@ -62,45 +55,15 @@ namespace DGVOutposts
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    dtMissions.Rows.Add(
-                        reader["mission_id"],
+                    dgvMissions.Rows.Add(
                         reader["outpost_id"],
+                        reader["mission_id"],
                         reader["mission_description"],
                         reader["date_begin"],
                         reader["date_plan_end"],
                         reader["date_actual_end"]);
                 }
             }
-
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_begin", HeaderText = "Дата начала", Tag = "date_begin" });
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_plan_end", HeaderText = "Планируемое завершение", Tag = "date_plan_end" });
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "cc_date_actual_end", HeaderText = "Реальное завершение", Tag = "date_actual_end" });
-
-            dgvMissions.DataSource = dtMissions;
-
-            dgvMissions.Columns["id"].Visible = false;
-            dgvMissions.Columns["outpost_id"].HeaderText = "Форпост";
-            dgvMissions.Columns["description"].HeaderText = "Описание";
-
-            dgvMissions.Columns["date_begin"].Visible = false;
-            dgvMissions.Columns["date_plan_end"].Visible = false;
-            dgvMissions.Columns["date_actual_end"].Visible = false;
-
-            for (int i = 0; i < dgvMissions.Rows.Count - 1; i++)
-            {
-                //dgvMissions["cc_date_begin", i].Value = dgvMissions["date_begin", i].Value;
-                //dgvMissions["cc_date_plan_end", i].Value = dgvMissions["date_plan_end", i].Value;
-                //dgvMissions["cc_date_actual_end", i].Value = dgvMissions["date_actual_end", i].Value;
-                dgvMissions["cc_date_begin", i].Value = dtMissions.Columns[""].;
-                dgvMissions["cc_date_plan_end", i].Value = dgvMissions["date_plan_end", i].Value;
-                dgvMissions["cc_date_actual_end", i].Value = dgvMissions["date_actual_end", i].Value;
-            }
-
-            //dgvMissions.Columns
-
-            //dgvMissions.Columns["date_begin"].HeaderText = "Дата начала";
-            //dgvMissions.Columns["date_plan_end"].HeaderText = "Планируется завершить";
-            //dgvMissions.Columns["date_actual_end"].HeaderText = "Завершилось";
         }
 
         private void InitializeDGVOutposts()
@@ -172,19 +135,8 @@ namespace DGVOutposts
         {
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < dgvMissions.Rows.Count - 1; i++)
-            {
-                dgvMissions["cc_date_begin", i].Value = dgvMissions["date_begin", i].Value;
-                dgvMissions["cc_date_plan_end", i].Value = dgvMissions["date_plan_end", i].Value;
-                dgvMissions["cc_date_actual_end", i].Value = dgvMissions["date_actual_end", i].Value;
-            }
-        }
-
         private void dgvMissions_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            dgvMissions.Rows[dgvMissions.Rows.Count - 1].Cells["cc_date_begin"].Value = "asdfasdfas";
         }
     }
 }

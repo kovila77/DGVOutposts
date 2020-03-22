@@ -34,7 +34,6 @@
             this.tpMissions = new System.Windows.Forms.TabPage();
             this.dgvMissions = new System.Windows.Forms.DataGridView();
             this.outpost_id = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,7 +86,6 @@
             // 
             // tpMissions
             // 
-            this.tpMissions.Controls.Add(this.button1);
             this.tpMissions.Controls.Add(this.dgvMissions);
             this.tpMissions.Location = new System.Drawing.Point(4, 22);
             this.tpMissions.Name = "tpMissions";
@@ -116,17 +114,6 @@
             // 
             this.outpost_id.HeaderText = "Форпост";
             this.outpost_id.Name = "outpost_id";
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(3, 398);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(786, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Refresh";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -223,7 +210,6 @@
         private CalendarColumn calendarColumn2;
         private CalendarColumn calendarColumn3;
         private System.Windows.Forms.DataGridViewComboBoxColumn outpost_id;
-        private System.Windows.Forms.Button button1;
     }
 }
 
