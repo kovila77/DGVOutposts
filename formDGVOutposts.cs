@@ -13,18 +13,29 @@ namespace DGVOutposts
 {
     public partial class formDGVOutposts : Form
     {
+        private DataTable dt;
+
         private readonly string sConnStr = new NpgsqlConnectionStringBuilder
         {
             Host = Database.Default.Host,
             Port = Database.Default.Port,
             Database = Database.Default.Name,
-            Username = Environment.GetEnvironmentVariable("POSTGRESQL_USERNAME"),
-            Password = Environment.GetEnvironmentVariable("POSTGRESQL_PASSWORD"),
+            Username = "postgres",//Environment.GetEnvironmentVariable("POSTGRESQL_USERNAME"),
+            Password = "kovila77",//Environment.GetEnvironmentVariable("POSTGRESQL_PASSWORD"),
         }.ConnectionString;
 
         public formDGVOutposts()
         {
             InitializeComponent();
+
+            dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("name", typeof(string));
+            dt.Columns.Add("economic_value", typeof(int));
+            dt.Columns.Add("x", typeof(int));
+            dt.Columns.Add("y", typeof(int));
+            dt.Columns.Add("z", typeof(int));
+
             InitializeDGVOutposts();
             InitializeDGVMissions();
         }
@@ -52,12 +63,21 @@ namespace DGVOutposts
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
                 {
-                    dgvOutposts.Rows.Add(reader["outpost_id"], reader["outpost_name"], reader["outpost_economic_value"], reader["outpost_coordinate_x"],
+                    dt.Rows.Add(reader["outpost_id"], reader["outpost_name"], reader["outpost_economic_value"], reader["outpost_coordinate_x"],
                         reader["outpost_coordinate_y"], reader["outpost_coordinate_z"]);
-                    //outpost_id.Items.Add(new StringWithTag(reader["outpost_name"] as string, Convert.ToInt32(reader["outpost_id"])));                    
+                    //dgvOutposts.Rows.Add(reader["outpost_id"], reader["outpost_name"], reader["outpost_economic_value"], reader["outpost_coordinate_x"],
+                    //    reader["outpost_coordinate_y"], reader["outpost_coordinate_z"]);
                 }
+                dgvOutposts.DataSource = dt;
+                dgvOutposts.Columns[dgvOutposts.Columns.Count - 1].HeaderText = "asdfa!!";
+                //while (reader.Read())
+                //{
+                //    dgvOutposts.Rows.Add(reader["outpost_id"], reader["outpost_name"], reader["outpost_economic_value"], reader["outpost_coordinate_x"],
+                //        reader["outpost_coordinate_y"], reader["outpost_coordinate_z"]);
+                //    //outpost_id.Items.Add(new StringWithTag(reader["outpost_name"] as string, Convert.ToInt32(reader["outpost_id"])));                    
+                //}
             }
-            outpost_id.DataSource = new BindingSource(dgvOutposts.Columns, "name");
+            //outpost_id.DataSource = new BindingSource(dgvOutposts.Columns, "name");
             //outpost_id.ValueMember = "0";
             //outpost_id.DisplayMember = "1";
             //string fff = "";
