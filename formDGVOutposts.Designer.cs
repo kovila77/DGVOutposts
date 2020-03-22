@@ -61,7 +61,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(800, 450);
             this.tabControl1.TabIndex = 1;
-            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tpOutposts
             // 
@@ -83,6 +82,8 @@
             this.dgvOutposts.Name = "dgvOutposts";
             this.dgvOutposts.Size = new System.Drawing.Size(786, 418);
             this.dgvOutposts.TabIndex = 0;
+            this.dgvOutposts.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOutposts_RowValidated);
+            this.dgvOutposts.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvOutposts_RowValidating);
             // 
             // tpMissions
             // 
@@ -106,9 +107,8 @@
             this.dgvMissions.Name = "dgvMissions";
             this.dgvMissions.Size = new System.Drawing.Size(786, 418);
             this.dgvMissions.TabIndex = 0;
-            this.dgvMissions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellContentClick);
-            this.dgvMissions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellEndEdit);
-            this.dgvMissions.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvMissions_RowsAdded);
+            this.dgvMissions.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_RowValidated);
+            this.dgvMissions.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvMissions_RowValidating);
             // 
             // outpost_id
             // 
@@ -183,7 +183,6 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "formDGVOutposts";
             this.Text = "Миссии форпостов";
-            this.Load += new System.EventHandler(this.formDGVOutposts_Load);
             this.tabControl1.ResumeLayout(false);
             this.tpOutposts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutposts)).EndInit();

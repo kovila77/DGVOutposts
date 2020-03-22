@@ -53,19 +53,19 @@ namespace DGVOutposts
             CalendarEditingControl ctl =
                 DataGridView.EditingControl as CalendarEditingControl;
             // Use the default row value when Value property is null.
-            if (this.Value == null)
+            try
             {
-                try
+                if (this.Value == null)
                 {
                     ctl.Value = (DateTime)this.DefaultNewRowValue;
                 }
-                catch
-                { }
+                else
+                {
+                    ctl.Value = (DateTime)this.Value;
+                }
             }
-            else
-            {
-                ctl.Value = (DateTime)this.Value;
-            }
+            catch
+            { }
         }
 
         public override Type EditType
