@@ -129,7 +129,7 @@ namespace DGVOutposts
             var cellsWithPotentialErrors = new[] { row.Cells["name"], row.Cells["economic_value"], row.Cells["x"], row.Cells["y"], row.Cells["z"] };
             foreach (var cell in cellsWithPotentialErrors)
             {
-                if (string.IsNullOrWhiteSpace(cell.Value is string ? (string)cell.Value : cell.Value.ToString()))
+                if (cell.Value is null || cell.Value is string && string.IsNullOrWhiteSpace((string)cell.Value))
                 {
                     cell.ErrorText = "Пустое значение!";
                     //row.ErrorText = $"Значение в столбце '{cell.OwningColumn.HeaderText} не может быть пустым";
@@ -141,6 +141,11 @@ namespace DGVOutposts
                     cell.ErrorText = "";
                 }
             }
+            int trash;
+            //if (int.TryParse((string)row.Cells["economic_value"].Value, out trash) && int.TryParse((string)row.Cells["x"].Value, out trash) && int.TryParse((string)row.Cells["y"].Value, out trash) && int.TryParse((string)row.Cells["z"].Value, out trash))
+            //{
+
+            //}
             if (errorInRow) return;
             row.ErrorText = "";
             row.Tag = true;
@@ -205,12 +210,6 @@ namespace DGVOutposts
             {
                 return;
             }
-
-            //dgvMissions.Columns[dgvMissions.Columns.Add("id", "id")].Visible = false;
-            //dgvMissions.Columns.Add("description", "Описание миссии");
-            //dgvMissions.Columns.Add(new CalendarColumn { Name = "date_begin", HeaderText = "Дата начала" });
-            //dgvMissions.Columns.Add(new CalendarColumn { Name = "date_plan_end", HeaderText = "Планируемое завершение" });
-            //dgvMissions.Columns.Add(new CalendarColumn { Name = "date_actual_end", HeaderText = "Реальное завершение" });
 
             var row = dgvMissions.Rows[e.RowIndex];
             bool errorInRow = false;
