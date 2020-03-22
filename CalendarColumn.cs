@@ -41,6 +41,7 @@ namespace DGVOutposts
         {
             // Use the short date format.
             this.Style.Format = "d";
+            this.Style.NullValue = "asrgasgserg";
         }
 
         public override void InitializeEditingControl(int rowIndex, object

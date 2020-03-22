@@ -33,6 +33,8 @@
             this.dgvOutposts = new System.Windows.Forms.DataGridView();
             this.tpMissions = new System.Windows.Forms.TabPage();
             this.dgvMissions = new System.Windows.Forms.DataGridView();
+            this.outpost_id = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,7 +45,6 @@
             this.calendarColumn1 = new DGVOutposts.CalendarColumn();
             this.calendarColumn2 = new DGVOutposts.CalendarColumn();
             this.calendarColumn3 = new DGVOutposts.CalendarColumn();
-            this.outpost_id = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpOutposts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutposts)).BeginInit();
@@ -61,6 +62,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(800, 450);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tpOutposts
             // 
@@ -85,6 +87,7 @@
             // 
             // tpMissions
             // 
+            this.tpMissions.Controls.Add(this.button1);
             this.tpMissions.Controls.Add(this.dgvMissions);
             this.tpMissions.Location = new System.Drawing.Point(4, 22);
             this.tpMissions.Name = "tpMissions";
@@ -107,6 +110,23 @@
             this.dgvMissions.TabIndex = 0;
             this.dgvMissions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellContentClick);
             this.dgvMissions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellEndEdit);
+            this.dgvMissions.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvMissions_RowsAdded);
+            // 
+            // outpost_id
+            // 
+            this.outpost_id.HeaderText = "Форпост";
+            this.outpost_id.Name = "outpost_id";
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.button1.Location = new System.Drawing.Point(3, 398);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(786, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Refresh";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -168,11 +188,6 @@
             this.calendarColumn3.Name = "calendarColumn3";
             this.calendarColumn3.Width = 186;
             // 
-            // outpost_id
-            // 
-            this.outpost_id.HeaderText = "Форпост";
-            this.outpost_id.Name = "outpost_id";
-            // 
             // formDGVOutposts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,6 +196,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "formDGVOutposts";
             this.Text = "Миссии форпостов";
+            this.Load += new System.EventHandler(this.formDGVOutposts_Load);
             this.tabControl1.ResumeLayout(false);
             this.tpOutposts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutposts)).EndInit();
@@ -207,6 +223,7 @@
         private CalendarColumn calendarColumn2;
         private CalendarColumn calendarColumn3;
         private System.Windows.Forms.DataGridViewComboBoxColumn outpost_id;
+        private System.Windows.Forms.Button button1;
     }
 }
 
