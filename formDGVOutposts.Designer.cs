@@ -31,12 +31,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpOutposts = new System.Windows.Forms.TabPage();
             this.dgvOutposts = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.economic_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coordinate_x = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coordinate_y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coordinate_z = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpMissions = new System.Windows.Forms.TabPage();
             this.dgvMissions = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,12 +43,7 @@
             this.calendarColumn1 = new DGVOutposts.CalendarColumn();
             this.calendarColumn2 = new DGVOutposts.CalendarColumn();
             this.calendarColumn3 = new DGVOutposts.CalendarColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.outpost_id = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.discription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date_begin = new DGVOutposts.CalendarColumn();
-            this.date_plan_end = new DGVOutposts.CalendarColumn();
-            this.date_actual_end = new DGVOutposts.CalendarColumn();
             this.tabControl1.SuspendLayout();
             this.tpOutposts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutposts)).BeginInit();
@@ -88,49 +77,11 @@
             // 
             this.dgvOutposts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOutposts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOutposts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.name,
-            this.economic_value,
-            this.coordinate_x,
-            this.coordinate_y,
-            this.coordinate_z});
             this.dgvOutposts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOutposts.Location = new System.Drawing.Point(3, 3);
             this.dgvOutposts.Name = "dgvOutposts";
             this.dgvOutposts.Size = new System.Drawing.Size(786, 418);
             this.dgvOutposts.TabIndex = 0;
-            // 
-            // id
-            // 
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.Visible = false;
-            // 
-            // name
-            // 
-            this.name.HeaderText = "Название";
-            this.name.Name = "name";
-            // 
-            // economic_value
-            // 
-            this.economic_value.HeaderText = "Ценность";
-            this.economic_value.Name = "economic_value";
-            // 
-            // coordinate_x
-            // 
-            this.coordinate_x.HeaderText = "x";
-            this.coordinate_x.Name = "coordinate_x";
-            // 
-            // coordinate_y
-            // 
-            this.coordinate_y.HeaderText = "y";
-            this.coordinate_y.Name = "coordinate_y";
-            // 
-            // coordinate_z
-            // 
-            this.coordinate_z.HeaderText = "z";
-            this.coordinate_z.Name = "coordinate_z";
             // 
             // tpMissions
             // 
@@ -148,18 +99,14 @@
             this.dgvMissions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMissions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMissions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.outpost_id,
-            this.discription,
-            this.date_begin,
-            this.date_plan_end,
-            this.date_actual_end});
+            this.outpost_id});
             this.dgvMissions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMissions.Location = new System.Drawing.Point(3, 3);
             this.dgvMissions.Name = "dgvMissions";
             this.dgvMissions.Size = new System.Drawing.Size(786, 418);
             this.dgvMissions.TabIndex = 0;
             this.dgvMissions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellContentClick);
+            this.dgvMissions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellEndEdit);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -221,36 +168,10 @@
             this.calendarColumn3.Name = "calendarColumn3";
             this.calendarColumn3.Width = 186;
             // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Visible = false;
-            // 
             // outpost_id
             // 
             this.outpost_id.HeaderText = "Форпост";
             this.outpost_id.Name = "outpost_id";
-            // 
-            // discription
-            // 
-            this.discription.HeaderText = "Описание";
-            this.discription.Name = "discription";
-            // 
-            // date_begin
-            // 
-            this.date_begin.HeaderText = "Дата начала миссии";
-            this.date_begin.Name = "date_begin";
-            // 
-            // date_plan_end
-            // 
-            this.date_plan_end.HeaderText = "Плановое окончание";
-            this.date_plan_end.Name = "date_plan_end";
-            // 
-            // date_actual_end
-            // 
-            this.date_actual_end.HeaderText = "Действительное окончание";
-            this.date_actual_end.Name = "date_actual_end";
             // 
             // formDGVOutposts
             // 
@@ -275,12 +196,6 @@
         private System.Windows.Forms.TabPage tpMissions;
         private System.Windows.Forms.DataGridView dgvOutposts;
         private System.Windows.Forms.DataGridView dgvMissions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn economic_value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coordinate_x;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coordinate_y;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coordinate_z;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
@@ -291,12 +206,7 @@
         private CalendarColumn calendarColumn1;
         private CalendarColumn calendarColumn2;
         private CalendarColumn calendarColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewComboBoxColumn outpost_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn discription;
-        private CalendarColumn date_begin;
-        private CalendarColumn date_plan_end;
-        private CalendarColumn date_actual_end;
     }
 }
 
