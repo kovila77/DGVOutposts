@@ -1,12 +1,6 @@
 ﻿using Npgsql;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DGVOutposts
@@ -29,7 +23,12 @@ namespace DGVOutposts
             InitializeComponent();
             InitializeDGVOutposts();
             InitializeDGVMissions();
+            //off sorting
+            OffColumnSortingDGV(dgvOutposts);
+            OffColumnSortingDGV(dgvMissions);
         }
+
+        private void OffColumnSortingDGV(DataGridView dgv) { foreach (DataGridViewColumn column in dgv.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable; }
 
         private void InitializeDGVMissions()
         {
@@ -52,7 +51,7 @@ namespace DGVOutposts
                                            date_begin,
                                            date_plan_end,
                                            date_actual_end
-                                    FROM outpost_missions;; "
+                                    FROM outpost_missions order by mission_id; "
                 };
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
@@ -90,7 +89,7 @@ namespace DGVOutposts
                                         outpost_coordinate_x,
                                         outpost_coordinate_y,
                                         outpost_coordinate_z
-                                    FROM outposts; "
+                                    FROM outposts order by outpost_id; "
                 };
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
@@ -217,12 +216,18 @@ namespace DGVOutposts
             foreach (var cell in cellsWithPotentialErrors)
             {
                 if (cell.Value is DBNull
-                    || string.IsNullOrWhiteSpace((string)cell.FormattedValue))
+                        || string.IsNullOrWhiteSpace((string)cell.FormattedValue))
                 {
-                    cell.ErrorText = "Пустое значение!";
-                    row.ErrorText = $"Проверьте данные";
-                    //row.Tag = true;
+                    if (cell.OwningColumn.Name == "outpost_id" && cell.Value is DBNull)
+                    {
+                        cell.ErrorText = "Данный форпост не сохранён в базе данных!";
+                    }
+                    else
+                    {
+                        cell.ErrorText = "Пустое значение!";
+                    }
                     willCommit = false;
+                    row.ErrorText = $"Проверьте данные";
                 }
                 else
                 {
@@ -255,7 +260,7 @@ namespace DGVOutposts
                 sCommand.Parameters.AddWithValue("outpost_id", row.Cells["outpost_id"].Value);
                 sCommand.Parameters.AddWithValue("date_begin", row.Cells["date_begin"].Value);
                 sCommand.Parameters.AddWithValue("date_plan_end", row.Cells["date_plan_end"].Value);
-                sCommand.Parameters.AddWithValue("date_actual_end", row.Cells["date_actual_end"].Value);
+                sCommand.Parameters.AddWithValue("date_actual_end", row.Cells["date_actual_end"].Value is null ? DBNull.Value : row.Cells["date_actual_end"].Value);
 
                 if (row.Cells["id"].Value is int)
                 {
