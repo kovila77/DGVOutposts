@@ -82,6 +82,7 @@
             this.dgvOutposts.Name = "dgvOutposts";
             this.dgvOutposts.Size = new System.Drawing.Size(786, 418);
             this.dgvOutposts.TabIndex = 0;
+            this.dgvOutposts.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOutposts_DataError);
             this.dgvOutposts.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOutposts_RowValidated);
             this.dgvOutposts.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvOutposts_RowValidating);
             // 

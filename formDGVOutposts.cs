@@ -125,30 +125,29 @@ namespace DGVOutposts
                 return;
             }
             var row = dgvOutposts.Rows[e.RowIndex];
-            bool errorInRow = false;
+            bool willCommit = true;
+            row.Tag = false;
             var cellsWithPotentialErrors = new[] { row.Cells["name"], row.Cells["economic_value"], row.Cells["x"], row.Cells["y"], row.Cells["z"] };
             foreach (var cell in cellsWithPotentialErrors)
             {
-                if (cell.Value is null || cell.Value is string && string.IsNullOrWhiteSpace((string)cell.Value))
+                if (cell.Value is DBNull
+                    || string.IsNullOrWhiteSpace((string)cell.FormattedValue))
                 {
                     cell.ErrorText = "Пустое значение!";
-                    //row.ErrorText = $"Значение в столбце '{cell.OwningColumn.HeaderText} не может быть пустым";
                     row.ErrorText = $"Проверьте данные";
-                    errorInRow = true;
+                    //row.Tag = true;
+                    willCommit = false;
                 }
                 else
                 {
                     cell.ErrorText = "";
                 }
             }
-            int trash;
-            //if (int.TryParse((string)row.Cells["economic_value"].Value, out trash) && int.TryParse((string)row.Cells["x"].Value, out trash) && int.TryParse((string)row.Cells["y"].Value, out trash) && int.TryParse((string)row.Cells["z"].Value, out trash))
-            //{
-
-            //}
-            if (errorInRow) return;
-            row.ErrorText = "";
-            row.Tag = true;
+            if (willCommit)
+            {
+                row.ErrorText = ""; row.Tag = willCommit;
+                return;
+            }
         }
 
         private void dgvOutposts_RowValidated(object sender, DataGridViewCellEventArgs e)
@@ -210,26 +209,31 @@ namespace DGVOutposts
             {
                 return;
             }
-
             var row = dgvMissions.Rows[e.RowIndex];
-            bool errorInRow = false;
+            row.Tag = false;
+            bool willCommit = true;
+            //row.ErrorText = "error";
             var cellsWithPotentialErrors = new[] { row.Cells["outpost_id"], row.Cells["description"], row.Cells["date_begin"], row.Cells["date_plan_end"] };
             foreach (var cell in cellsWithPotentialErrors)
             {
-                if (cell.Value is null || cell.Value is string && string.IsNullOrWhiteSpace((string)cell.Value))
+                if (cell.Value is DBNull
+                    || string.IsNullOrWhiteSpace((string)cell.FormattedValue))
                 {
                     cell.ErrorText = "Пустое значение!";
                     row.ErrorText = $"Проверьте данные";
-                    errorInRow = true;
+                    //row.Tag = true;
+                    willCommit = false;
                 }
                 else
                 {
                     cell.ErrorText = "";
                 }
             }
-            if (errorInRow) return;
-            row.ErrorText = "";
-            row.Tag = true;
+            if (willCommit)
+            {
+                row.ErrorText = ""; row.Tag = willCommit;
+                return;
+            }
         }
 
         private void dgvMissions_RowValidated(object sender, DataGridViewCellEventArgs e)
@@ -284,6 +288,15 @@ namespace DGVOutposts
                 }
             }
             row.Tag = false;
+        }
+
+        private void dgvOutposts_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Context.ToString().Contains(DataGridViewDataErrorContexts.Parsing.ToString()))
+            {
+                var cell = dgvOutposts[e.ColumnIndex, e.RowIndex];
+                cell.Value = null;
+            }
         }
     }
 }
