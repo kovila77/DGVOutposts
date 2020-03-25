@@ -23,7 +23,6 @@ namespace DGVOutposts
             InitializeComponent();
             InitializeDGVOutposts();
             InitializeDGVMissions();
-            //off sorting
             OffColumnSortingDGV(dgvOutposts);
             OffColumnSortingDGV(dgvMissions);
         }
@@ -295,6 +294,11 @@ namespace DGVOutposts
             row.Tag = false;
         }
 
+        private void dgvOutposts_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+
+        }
+
         private void dgvOutposts_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             if (e.Context.ToString().Contains(DataGridViewDataErrorContexts.Parsing.ToString()))
@@ -302,6 +306,6 @@ namespace DGVOutposts
                 var cell = dgvOutposts[e.ColumnIndex, e.RowIndex];
                 cell.Value = null;
             }
-        }
+        }               
     }
 }

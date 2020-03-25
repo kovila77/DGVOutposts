@@ -55,13 +55,15 @@ namespace DGVOutposts
             // Use the default row value when Value property is null.
             try
             {
-                if (this.Value == null)
+                if (this.Value == DBNull.Value)
                 {
-                    ctl.Value = (DateTime)this.DefaultNewRowValue;
+                    //  ctl.Value = (DateTime)this.DefaultNewRowValue;
+                    ctl.Value = DateTime.Now;
+                    this.Value = ctl.Value;
                 }
                 else
                 {
-                    ctl.Value = (DateTime)this.Value;
+                    ctl.Value = (DateTime)this.Value; this.Value = ctl.Value;
                 }
             }
             catch
@@ -92,8 +94,9 @@ namespace DGVOutposts
             get
             {
                 // Use the current date and time as the default value.
-                //return DateTime.Now;
-                return null;
+               // return DateTime.Now;
+                //return null;
+                return DBNull.Value;
             }
         }
     }
