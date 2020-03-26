@@ -1,6 +1,8 @@
 ﻿using Npgsql;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DGVOutposts
@@ -42,7 +44,7 @@ namespace DGVOutposts
                 dgvMissions.Columns.Remove("date_plan_end");
                 dgvMissions.Columns.Remove("date_actual_end");
                 dgvMissions.Columns.Remove("outpost_id");
-            }            
+            }
             dgvMissions.Columns.Add(outpost_id);
             dgvMissions.Columns[dgvMissions.Columns.Add("id", "id")].Visible = false;
             dgvMissions.Columns.Add("description", "Описание миссии");
@@ -90,7 +92,6 @@ namespace DGVOutposts
             dtOutposts.Columns.Add("x", typeof(int));
             dtOutposts.Columns.Add("y", typeof(int));
             dtOutposts.Columns.Add("z", typeof(int));
-            outpost_id = new DataGridViewComboBoxColumn() { Name = "outpost_id", HeaderText = "Форпост" };
 
             using (var sConn = new NpgsqlConnection(sConnStr))
             {
@@ -127,9 +128,30 @@ namespace DGVOutposts
             dgvOutposts.Columns["y"].HeaderText = "y";
             dgvOutposts.Columns["z"].HeaderText = "z";
 
+            if (dgvMissions.Columns.Count > 1)
+            {
+                List<object> newDataOutposts = dtOutposts.AsEnumerable().Select(x => x["id"]).ToList();
+                for (int i = 0; i < dgvMissions.Rows.Count; i++)
+                {
+                    if (dgvMissions["outpost_id", i].Value != null)
+                    {
+                        //if (!(newDataOutposts    .Contains(dgvMissions["outpost_id", i].Value)))
+                        if (!(newDataOutposts.Contains(dgvMissions["outpost_id", i].Value)))
+                        {
+                            dgvMissions["outpost_id", i].Value = DBNull.Value;
+                            dgvMissions["outpost_id", i].ErrorText = "Пустое значение!";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                outpost_id = new DataGridViewComboBoxColumn() { Name = "outpost_id", HeaderText = "Форпост" };
+            }
             outpost_id.DataSource = dtOutposts;
             outpost_id.ValueMember = "id";
             outpost_id.DisplayMember = "name";
+
         }
 
         private void dgvOutposts_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
@@ -319,15 +341,8 @@ namespace DGVOutposts
             }
         }
 
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-        }
-
         private void setNULLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //var t = (DataGridViewRow)contextMenuStrip1.SourceControl;
-            //t.CurrentCell.Value = DBNull.Value;
-            //var cell = (DataGridCell)contextMenuStrip1.Tag;
             dgvMissions[mouseLocation.ColumnIndex, mouseLocation.RowIndex].Value = DBNull.Value;
             dgvMissions.Rows[mouseLocation.RowIndex].Tag = true;
             dgvMissions_RowValidated(null, new DataGridViewCellEventArgs(mouseLocation.ColumnIndex, mouseLocation.RowIndex));
