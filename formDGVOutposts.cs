@@ -8,7 +8,7 @@ namespace DGVOutposts
     public partial class formDGVOutposts : Form
     {
         private DataTable dtOutposts;
-
+        private DataGridViewCellEventArgs mouseLocation;
         private readonly string sConnStr = new NpgsqlConnectionStringBuilder
         {
             Host = Database.Default.Host,
@@ -25,18 +25,29 @@ namespace DGVOutposts
             InitializeDGVMissions();
             OffColumnSortingDGV(dgvOutposts);
             OffColumnSortingDGV(dgvMissions);
+            tabControl1.TabPages[0].Tag = dgvOutposts;
+            tabControl1.TabPages[1].Tag = dgvMissions;
         }
 
         private void OffColumnSortingDGV(DataGridView dgv) { foreach (DataGridViewColumn column in dgv.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable; }
 
         private void InitializeDGVMissions()
         {
+            if (!(dgvMissions.Tag is null) && (bool)dgvMissions.Tag)
+            {
+                dgvMissions.Columns.Remove("id");
+                dgvMissions.Columns.Remove("description");
+                dgvMissions.Columns.Remove("date_begin");
+                dgvMissions.Columns.Remove("date_plan_end");
+                dgvMissions.Columns.Remove("date_actual_end");
+            }
             dgvMissions.Columns[dgvMissions.Columns.Add("id", "id")].Visible = false;
             dgvMissions.Columns.Add("description", "Описание миссии");
             dgvMissions.Columns.Add(new CalendarColumn { Name = "date_begin", HeaderText = "Дата начала" });
             dgvMissions.Columns.Add(new CalendarColumn { Name = "date_plan_end", HeaderText = "Планируемое завершение" });
-            dgvMissions.Columns.Add(new CalendarColumn { Name = "date_actual_end", HeaderText = "Реальное завершение" });
-
+            var ccDAE = new CalendarColumn { Name = "date_actual_end", HeaderText = "Реальное завершение" };
+            ccDAE.ContextMenuStrip = contextMenuStrip1;
+            dgvMissions.Columns.Add(ccDAE);
 
             using (var sConn = new NpgsqlConnection(sConnStr))
             {
@@ -50,7 +61,7 @@ namespace DGVOutposts
                                            date_begin,
                                            date_plan_end,
                                            date_actual_end
-                                    FROM outpost_missions order by mission_id; "
+                                    FROM outpost_missions order by outpost_id; "
                 };
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
@@ -64,6 +75,7 @@ namespace DGVOutposts
                         reader["date_actual_end"]);
                 }
             }
+            dgvMissions.Tag = true;
         }
 
         private void InitializeDGVOutposts()
@@ -88,7 +100,7 @@ namespace DGVOutposts
                                         outpost_coordinate_x,
                                         outpost_coordinate_y,
                                         outpost_coordinate_z
-                                    FROM outposts order by outpost_id; "
+                                    FROM outposts order by outpost_name; "
                 };
                 var reader = sCommand.ExecuteReader();
                 while (reader.Read())
@@ -294,11 +306,6 @@ namespace DGVOutposts
             row.Tag = false;
         }
 
-        private void dgvOutposts_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-
-        }
-
         private void dgvOutposts_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             if (e.Context.ToString().Contains(DataGridViewDataErrorContexts.Parsing.ToString()))
@@ -306,6 +313,40 @@ namespace DGVOutposts
                 var cell = dgvOutposts[e.ColumnIndex, e.RowIndex];
                 cell.Value = null;
             }
-        }               
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        }
+
+        private void setNULLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var t = (DataGridViewRow)contextMenuStrip1.SourceControl;
+            //t.CurrentCell.Value = DBNull.Value;
+            //var cell = (DataGridCell)contextMenuStrip1.Tag;
+            dgvMissions[mouseLocation.ColumnIndex, mouseLocation.RowIndex].Value = DBNull.Value;
+            dgvMissions.Rows[mouseLocation.RowIndex].Tag = true;
+            dgvMissions_RowValidated(null, new DataGridViewCellEventArgs(mouseLocation.ColumnIndex, mouseLocation.RowIndex));
+        }
+
+        private void dgvMissions_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            mouseLocation = e;
+        }
+
+        private void перезагрузитьДанныеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    InitializeDGVOutposts();
+                    break;
+                case 1:
+                    InitializeDGVMissions();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
