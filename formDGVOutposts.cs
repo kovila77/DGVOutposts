@@ -9,6 +9,7 @@ namespace DGVOutposts
     {
         private DataTable dtOutposts;
         private DataGridViewCellEventArgs mouseLocation;
+        private DataGridViewComboBoxColumn outpost_id;
         private readonly string sConnStr = new NpgsqlConnectionStringBuilder
         {
             Host = Database.Default.Host,
@@ -40,7 +41,9 @@ namespace DGVOutposts
                 dgvMissions.Columns.Remove("date_begin");
                 dgvMissions.Columns.Remove("date_plan_end");
                 dgvMissions.Columns.Remove("date_actual_end");
-            }
+                dgvMissions.Columns.Remove("outpost_id");
+            }            
+            dgvMissions.Columns.Add(outpost_id);
             dgvMissions.Columns[dgvMissions.Columns.Add("id", "id")].Visible = false;
             dgvMissions.Columns.Add("description", "Описание миссии");
             dgvMissions.Columns.Add(new CalendarColumn { Name = "date_begin", HeaderText = "Дата начала" });
@@ -87,6 +90,7 @@ namespace DGVOutposts
             dtOutposts.Columns.Add("x", typeof(int));
             dtOutposts.Columns.Add("y", typeof(int));
             dtOutposts.Columns.Add("z", typeof(int));
+            outpost_id = new DataGridViewComboBoxColumn() { Name = "outpost_id", HeaderText = "Форпост" };
 
             using (var sConn = new NpgsqlConnection(sConnStr))
             {

@@ -34,9 +34,11 @@
             this.dgvOutposts = new System.Windows.Forms.DataGridView();
             this.tpMissions = new System.Windows.Forms.TabPage();
             this.dgvMissions = new System.Windows.Forms.DataGridView();
-            this.outpost_id = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setNULLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.перезагрузитьДанныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,9 +49,6 @@
             this.calendarColumn1 = new DGVOutposts.CalendarColumn();
             this.calendarColumn2 = new DGVOutposts.CalendarColumn();
             this.calendarColumn3 = new DGVOutposts.CalendarColumn();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.перезагрузитьДанныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tpOutposts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutposts)).BeginInit();
@@ -109,8 +108,6 @@
             // 
             this.dgvMissions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMissions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMissions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.outpost_id});
             this.dgvMissions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMissions.Location = new System.Drawing.Point(3, 3);
             this.dgvMissions.Name = "dgvMissions";
@@ -119,11 +116,6 @@
             this.dgvMissions.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellMouseEnter);
             this.dgvMissions.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_RowValidated);
             this.dgvMissions.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvMissions_RowValidating);
-            // 
-            // outpost_id
-            // 
-            this.outpost_id.HeaderText = "Форпост";
-            this.outpost_id.Name = "outpost_id";
             // 
             // contextMenuStrip1
             // 
@@ -139,6 +131,31 @@
             this.setNULLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.setNULLToolStripMenuItem.Text = "Set NULL";
             this.setNULLToolStripMenuItem.Click += new System.EventHandler(this.setNULLToolStripMenuItem_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.правкаToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // правкаToolStripMenuItem
+            // 
+            this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.перезагрузитьДанныеToolStripMenuItem});
+            this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
+            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.правкаToolStripMenuItem.Text = "Правка";
+            // 
+            // перезагрузитьДанныеToolStripMenuItem
+            // 
+            this.перезагрузитьДанныеToolStripMenuItem.Name = "перезагрузитьДанныеToolStripMenuItem";
+            this.перезагрузитьДанныеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.перезагрузитьДанныеToolStripMenuItem.Text = "Перезагрузить данные";
+            this.перезагрузитьДанныеToolStripMenuItem.Click += new System.EventHandler(this.перезагрузитьДанныеToolStripMenuItem_Click);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -200,31 +217,6 @@
             this.calendarColumn3.Name = "calendarColumn3";
             this.calendarColumn3.Width = 186;
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.правкаToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // правкаToolStripMenuItem
-            // 
-            this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.перезагрузитьДанныеToolStripMenuItem});
-            this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
-            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.правкаToolStripMenuItem.Text = "Правка";
-            // 
-            // перезагрузитьДанныеToolStripMenuItem
-            // 
-            this.перезагрузитьДанныеToolStripMenuItem.Name = "перезагрузитьДанныеToolStripMenuItem";
-            this.перезагрузитьДанныеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.перезагрузитьДанныеToolStripMenuItem.Text = "Перезагрузить данные";
-            this.перезагрузитьДанныеToolStripMenuItem.Click += new System.EventHandler(this.перезагрузитьДанныеToolStripMenuItem_Click);
-            // 
             // formDGVOutposts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,7 +256,6 @@
         private CalendarColumn calendarColumn1;
         private CalendarColumn calendarColumn2;
         private CalendarColumn calendarColumn3;
-        private System.Windows.Forms.DataGridViewComboBoxColumn outpost_id;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem setNULLToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
