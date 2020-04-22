@@ -92,6 +92,7 @@
             this.dgvOutposts.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvOutposts_DataError);
             this.dgvOutposts.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOutposts_RowValidated);
             this.dgvOutposts.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvOutposts_RowValidating);
+            this.dgvOutposts.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvOutposts_UserDeletingRow);
             // 
             // tpMissions
             // 
@@ -114,6 +115,7 @@
             this.dgvMissions.Size = new System.Drawing.Size(786, 394);
             this.dgvMissions.TabIndex = 0;
             this.dgvMissions.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_CellMouseEnter);
+            this.dgvMissions.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMissions_DataError);
             this.dgvMissions.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_RowValidated);
             this.dgvMissions.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvMissions_RowValidating);
             // 

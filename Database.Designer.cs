@@ -12,7 +12,7 @@ namespace DGVOutposts {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
     internal sealed partial class Database : global::System.Configuration.ApplicationSettingsBase {
         
         private static Database defaultInstance = ((Database)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Database())));
@@ -37,7 +37,7 @@ namespace DGVOutposts {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.137.245")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.88.102")]
         public string Host {
             get {
                 return ((string)(this["Host"]));

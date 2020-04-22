@@ -193,22 +193,23 @@ namespace DGVOutposts
                 return;
             }
             var row = dgvOutposts.Rows[e.RowIndex];
-
-            using (var sConn = new NpgsqlConnection(sConnStr))
+            try
             {
-                sConn.Open();
-                var sCommand = new NpgsqlCommand
+                using (var sConn = new NpgsqlConnection(sConnStr))
                 {
-                    Connection = sConn
-                };
-                sCommand.Parameters.AddWithValue("name", row.Cells["name"].Value);
-                sCommand.Parameters.AddWithValue("economic_value", row.Cells["economic_value"].Value);
-                sCommand.Parameters.AddWithValue("x", row.Cells["x"].Value);
-                sCommand.Parameters.AddWithValue("y", row.Cells["y"].Value);
-                sCommand.Parameters.AddWithValue("z", row.Cells["z"].Value);
-                if (row.Cells["id"].Value is int)
-                {
-                    sCommand.CommandText = @"
+                    sConn.Open();
+                    var sCommand = new NpgsqlCommand
+                    {
+                        Connection = sConn
+                    };
+                    sCommand.Parameters.AddWithValue("name", row.Cells["name"].Value);
+                    sCommand.Parameters.AddWithValue("economic_value", row.Cells["economic_value"].Value);
+                    sCommand.Parameters.AddWithValue("x", row.Cells["x"].Value);
+                    sCommand.Parameters.AddWithValue("y", row.Cells["y"].Value);
+                    sCommand.Parameters.AddWithValue("z", row.Cells["z"].Value);
+                    if (row.Cells["id"].Value is int)
+                    {
+                        sCommand.CommandText = @"
                         UPDATE outposts
                         SET outpost_name           = @name,
                             outpost_economic_value = @economic_value,
@@ -216,12 +217,12 @@ namespace DGVOutposts
                             outpost_coordinate_y   = @y,
                             outpost_coordinate_z   = @z
                         WHERE outpost_id = @id;";
-                    sCommand.Parameters.AddWithValue("id", (int)row.Cells["id"].Value);
-                    sCommand.ExecuteNonQuery();
-                }
-                else
-                {
-                    sCommand.CommandText = @"
+                        sCommand.Parameters.AddWithValue("id", (int)row.Cells["id"].Value);
+                        sCommand.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        sCommand.CommandText = @"
                         INSERT INTO outposts (outpost_name,
                                               outpost_economic_value,
                                               outpost_coordinate_x,
@@ -233,8 +234,12 @@ namespace DGVOutposts
                                 @y,
                                 @z)
                         RETURNING outpost_id;";
-                    row.Cells["id"].Value = sCommand.ExecuteScalar();
+                        row.Cells["id"].Value = sCommand.ExecuteScalar();
+                    }
                 }
+            } catch (Exception)
+            {
+                row.ErrorText = "Ошибка добавления! Возможно такая уже существует!";
             }
             row.Tag = false;
         }
@@ -341,6 +346,18 @@ namespace DGVOutposts
             }
         }
 
+        private void dgvMissions_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.ColumnIndex == dgvMissions.Columns["outpost_id"].Index)
+            {
+                if (e.Context.ToString().Contains(DataGridViewDataErrorContexts.Display.ToString()))
+                {
+                    var cell = dgvOutposts[e.ColumnIndex, e.RowIndex];
+                    cell.Value = null;
+                }
+            }
+        }
+
         private void setNULLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvMissions[mouseLocation.ColumnIndex, mouseLocation.RowIndex].Value = DBNull.Value;
@@ -367,5 +384,24 @@ namespace DGVOutposts
                     break;
             }
         }
+
+        private void dgvOutposts_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (!(e.Row.Cells["id"].Value is null) /*&& e.Row.Cells["id"].Value != DBNull.Value*/)
+            {
+                using (var sConn = new NpgsqlConnection(sConnStr))
+                {
+                    sConn.Open();
+                    var sCommand = new NpgsqlCommand
+                    {
+                        Connection = sConn,
+                        CommandText = "DELETE FROM outposts WHERE outpost_id = @id"
+                    };
+                    sCommand.Parameters.AddWithValue("id", (int)e.Row.Cells["id"].Value);
+                    sCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
