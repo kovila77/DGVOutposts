@@ -118,6 +118,7 @@
             this.dgvMissions.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMissions_DataError);
             this.dgvMissions.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMissions_RowValidated);
             this.dgvMissions.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvMissions_RowValidating);
+            this.dgvMissions.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvMissions_UserDeletingRow);
             // 
             // contextMenuStrip1
             // 

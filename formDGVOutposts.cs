@@ -388,17 +388,16 @@ namespace DGVOutposts
 
         private void dgvOutposts_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-
             if (!(e.Row.Cells["id"].Value is null) /*&& e.Row.Cells["id"].Value != DBNull.Value*/)
             {
                 var id = (int)e.Row.Cells["id"].Value;
                 DataGridViewCell cell;
                 for (int i = 0; i < dgvMissions.Rows.Count - 1; i++)
                 {
-                    cell = dgvMissions.Rows[i].Cells["id"];
+                    cell = dgvMissions.Rows[i].Cells["outpost_id"];
                     if (cell.Value != null && cell.Value != DBNull.Value && (int)cell.Value == id)
                     {
-                        MessageBox.Show("Данный форпост связан с миссией! Удалите сначала миссию!");
+                        MessageBox.Show("Данный форпост связан с миссией! Измените или удалите миссию!");
                         e.Cancel = true;
                         return;
                     }
@@ -410,6 +409,27 @@ namespace DGVOutposts
                     {
                         Connection = sConn,
                         CommandText = "DELETE FROM outposts WHERE outpost_id = @id"
+                    };
+                    sCommand.Parameters.AddWithValue("id", id);
+                    sCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void dgvMissions_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (!(e.Row.Cells["id"].Value == null) && !(e.Row.Cells["id"].Value == DBNull.Value))
+            {
+                var id = (int)e.Row.Cells["id"].Value;
+                using (var sConn = new NpgsqlConnection(sConnStr))
+                {
+                    sConn.Open();
+                    var sCommand = new NpgsqlCommand
+                    {
+                        Connection = sConn,
+                        CommandText = @"DELETE
+                                        FROM outpost_missions
+                                        WHERE mission_id = @id;"
                     };
                     sCommand.Parameters.AddWithValue("id", id);
                     sCommand.ExecuteNonQuery();
